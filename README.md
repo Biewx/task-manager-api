@@ -1,59 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CRUD de Tarefas com Autenticação via Token (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Um projeto de API REST para gerenciamento de tarefas, incluindo autenticação baseada em tokens.
+Criado com foco em boas práticas, organização em camadas, validações, e separação clara de responsabilidades.
 
-## About Laravel
+## Tecnologias utilizadas
+- PHP 8+
+- Laravel 12
+- MySQL
+- Laravel Sanctum (autenticação)
+- Composer
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Como utilizar
+### Pré Requisitos
+- PHP instalado (8.1+)
+- Composer
+- MySQL
+- Extensões necessárias do Laravel
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Passo a passo
+#### 1. Clone o repositório:
+```
+git clone https://github.com/seu-user/crud-tarefas.git
+```
+#### 1. Clone o repositório:
+```
+git clone https://github.com/seu-user/crud-tarefas.git
+```
+#### 2. Instale as dependências:
+```
+composer install
+```
+#### 3. Copie o arquivo de ambiente:
+```
+cp .env.example .env
+```
+#### 4. Configure seu banco no .env.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 5. Gere a key do Laravel:
+```
+php artisan key:generate
+```
+#### 6. Rode as migrations:
+```
+php artisan migrate
+```
+#### 7. Inicie o servidor:
+```
+php artisan serve
+```
 
-## Learning Laravel
+## Endpoints e Funcionalidades
+### Autenticação
+### Cadastrar usuário: POST /api/register
+#### Exemplo:
+```
+{
+  "name": "Gabriel",
+  "email": "gabriel@example.com",
+  "password": "12345678"
+  "password_confirmation": "12345678"
+}
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Login: POST /api/login
+#### Retorno:
+```
+{
+  "token": "seu_token_aqui"
+}
+```
+Use este token no header de todas as requisições autenticadas:
+```
+Authorization: Bearer SEU_TOKEN
+```
+### LogOut: POST /api/login
+### CRUD
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Método | Rota | Descrição |
+|--------|------|------------|
+| GET | /api/tarefas | Lista todas |
+| POST | /api/tarefas | Cria tarefa |
+| PUT | /api/tarefas/{id} | Editar tarefa |
+| GET | /api/tarefas/{id} | Exibir tarefa específica |
+| DELETE | /api/tarefas/{id} | Excluir tarefa |
 
-## Laravel Sponsors
+## Arquitetura
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- O projeto segue uma separação clara de camadas:
+- Controllers → recebem requisições e direcionam o fluxo
+- Requests → validam dados de entrada
+- Services → contêm regras de negócio
+- Repositories (quando necessário) → acesso a dados
+- Models → representam entidades do domínio
 
-### Premium Partners
+### Motivações:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- facilita testes
+- melhora a manutenção
+- desacopla regras de negócio do framework
+- deixa o código mais extensível
 
-## Contributing
+## Próximas melhorias
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- [ ] Implementar Resources para padronizar as respostas da API
+- [ ] Criar tratamento global de erros com Handler.php
+- [ ] Adicionar testes automatizados (Feature e Unit)
+- [ ] Criar documentação automatizada com Swagger
+- [ ] Dockerizar o ambiente
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
